@@ -33,4 +33,6 @@ dependencies {
     //gradle view
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'jp.wasabeef:blurry:2.1.1'
+    implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
 }

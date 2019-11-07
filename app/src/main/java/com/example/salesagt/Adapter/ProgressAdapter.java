@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,9 +56,11 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ViewHo
         return (mProgres!=null)?mProgres.size():0;
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
+        private LinearLayout linearLayout;
         private TextView namaPerusahan,sales,statuss,income;
         public ViewHolder(View itemView) {
             super(itemView);
+            linearLayout=itemView.findViewById(R.id.recyle_linier);
             namaPerusahan=itemView.findViewById(R.id.namaperusahaan_recyle);
             sales=itemView.findViewById(R.id.namasales_recyle);
             statuss=itemView.findViewById(R.id.status_recyle);

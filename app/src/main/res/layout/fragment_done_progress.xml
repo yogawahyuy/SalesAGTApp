@@ -5,10 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.DoneProgressFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyle_done"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ini done fragment" />
+        android:scrollbars="vertical"/>
+    <LinearLayout
+        android:id="@+id/emptyview_done"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icons8emptybox96"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Whoops... look like data is empty"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
