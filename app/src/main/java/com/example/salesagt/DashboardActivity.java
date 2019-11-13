@@ -36,6 +36,12 @@ public class DashboardActivity extends AppCompatActivity {
                     case R.id.ic_product:
                         customViewPager.setCurrentItem(1);
                         break;
+                    case R.id.ic_notification:
+                        customViewPager.setCurrentItem(2);
+                        break;
+                    case R.id.ic_profile:
+                        customViewPager.setCurrentItem(3);
+                        break;
                 }
                 return false;
             }

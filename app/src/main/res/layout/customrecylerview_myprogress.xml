@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="12dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="12dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    app:cardPreventCornerOverlap="false">
+    <LinearLayout
+        android:id="@+id/recyle_linier_myprogress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icons8tickbox160"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="10dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/fielddone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <TextView
+                    android:id="@+id/status_recyle_myprogress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"/>
+                <TextView
+                    android:id="@+id/namaperusahaan_recyle_myprogress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nama Persuhanaan"
+                    android:layout_marginTop="8dp"
+                    />
+                <TextView
+                    android:id="@+id/namasales_recyle_myprogress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:layout_marginTop="8dp"/>
+                <TextView
+                    android:id="@+id/income_recyle_myprogress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Penadapatan"
+                    android:textColor="@android:color/black"
+                    android:layout_marginTop="8dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/fielddone"
+                android:padding="8dp"
+                >
+                <TextView
+                    android:id="@+id/tanggal_myprogress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="27 November 2019"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

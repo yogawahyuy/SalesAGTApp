@@ -26,8 +26,12 @@
             android:src="@drawable/icons8tickbox160"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/fielddone"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
@@ -61,6 +65,22 @@
                 android:layout_marginTop="8dp"/>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/fielddone"
+            android:padding="8dp"
+            >
+            <TextView
+                android:id="@+id/tanggal_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="27 November 2019"
+                />
+
+        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

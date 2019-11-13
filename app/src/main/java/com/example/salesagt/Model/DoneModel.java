@@ -1,7 +1,7 @@
 package com.example.salesagt.Model;
 
 public class DoneModel {
-    String id,companyName,salesName,checkStatus,income;
+    String id,companyName,salesName,checkStatus,income,date;
 
     public DoneModel(String id, String companyName, String salesName, String checkStatus, String income) {
         this.id = id;
@@ -50,5 +50,13 @@ public class DoneModel {
 
     public void setIncome(String income) {
         this.income = income;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

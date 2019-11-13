@@ -1,16 +1,10 @@
 package com.example.salesagt.Model;
 
-public class ProgressModel {
+public class MyProgressModel {
     String id,companyName,salesName,checkStatus,income,date;
 
-    public ProgressModel(String id, String companyName, String salesName, String checkStatus, String income) {
-        this.id = id;
-        this.companyName = companyName;
-        this.salesName = salesName;
-        this.checkStatus = checkStatus;
-        this.income = income;
+    public MyProgressModel() {
     }
-    public ProgressModel(){}
 
     public String getId() {
         return id;

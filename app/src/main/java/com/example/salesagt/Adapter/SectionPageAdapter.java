@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.salesagt.Fragments.DashboardFragment;
 import com.example.salesagt.Fragments.MyProgressFragment;
+import com.example.salesagt.Fragments.NotifFragment;
+import com.example.salesagt.Fragments.ProfileFragment;
 
 public class SectionPageAdapter extends FragmentPagerAdapter {
     private Context context;
@@ -21,13 +23,15 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
             return new DashboardFragment();
         }else if(position==1){
             return new MyProgressFragment();
-        }else {
-            return new DashboardFragment();
+        }else if (position==2){
+            return new NotifFragment();
+        }else{
+            return new ProfileFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

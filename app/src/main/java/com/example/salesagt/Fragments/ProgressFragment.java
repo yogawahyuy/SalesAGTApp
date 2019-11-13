@@ -41,8 +41,13 @@ public class ProgressFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_progress, container, false);
         setUpView(view);
-        generateView(view);
+        generateView();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void setUpView(View view){
@@ -59,9 +64,9 @@ public class ProgressFragment extends Fragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
     }
-    private void generateView(View view){
+    private void generateView(){
         ProgressModel progressModel=new ProgressModel();
-        for (int i = 0; i <10 ; i++) {
+        for (int i = 0; i <5 ; i++) {
             String id=String.valueOf(i);
             progressModel.setId(id);
             progressModel.setCompanyName("Authentic Guards");
