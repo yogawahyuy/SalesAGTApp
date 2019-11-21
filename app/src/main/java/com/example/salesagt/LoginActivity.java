@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.salesagt.Model.UserModel;
+import com.example.salesagt.View.LoginEmailActivity;
+import com.example.salesagt.View.RegisterActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -104,13 +106,19 @@ public class LoginActivity extends AppCompatActivity {
         loginEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(LoginActivity.this,LoginEmailActivity.class));
             }
         });
         loginGmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             loginWithGmail();
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
     }
