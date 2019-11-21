@@ -1,5 +1,6 @@
 package com.example.salesagt.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText fullName,email,noHp,password,conPassword;
     Button btnRegister;
     FirebaseAuth mFirebaseAuth;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password too Short", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!stPassword.equals(stPassword)){
+        if (!stPassword.equals(stConPassword)){
             Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
         }else{
+            displayLoader();
             mFirebaseAuth.createUserWithEmailAndPassword(stEmail,stPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -126,5 +129,12 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void displayLoader(){
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Creating Account...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 }

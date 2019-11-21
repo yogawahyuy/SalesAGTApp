@@ -1,5 +1,6 @@
 package com.example.salesagt.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.example.salesagt.DashboardActivity;
 import com.example.salesagt.Model.UserModel;
 import com.example.salesagt.R;
@@ -34,6 +36,7 @@ public class LoginEmailActivity extends AppCompatActivity {
     Button btnLogin;
     TextView forgetPassword;
     FirebaseUser currentUser;
+    ProgressDialog progressDialog;
     public static final String regEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,12 @@ public class LoginEmailActivity extends AppCompatActivity {
                 checkUser();
             }
         });
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginEmailActivity.this,ResetPasswordActivity.class));
+            }
+        });
     }
 
     @Override
@@ -61,21 +70,27 @@ public class LoginEmailActivity extends AppCompatActivity {
             if (!currentUser.isEmailVerified()){
                 Intent intent=getIntent();
                 if (intent.getStringExtra("name")!=null){
-                    
+                    CFAlertDialog.Builder builder=new CFAlertDialog.Builder(this)
+                            .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                            .setTitle("HELLO "+intent.getStringExtra("name"))
+                            .setMessage("Please check your email to verify and you can login to your account");
+                    builder.show();
                 }
             }
         }
     }
 
     private void checkUser(){
-
+        displayLoader();
         String email=edtEmail.getText().toString(),password=edtPassword.getText().toString();
         Pattern pattern=Pattern.compile(regEx);
         Matcher matcher=pattern.matcher(email);
         if (email.length()==0 || password.length()==0){
             Toast.makeText(this, "You Must Enter Email or Password", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }else if (!matcher.find()){
             Toast.makeText(this, "Your Email is Unregistered", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }else{
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginEmailActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -105,5 +120,12 @@ public class LoginEmailActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    private void displayLoader(){
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Login..");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 }

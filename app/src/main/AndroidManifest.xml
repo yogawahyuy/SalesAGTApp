@@ -20,7 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.RegisterActivity" />
-        <activity android:name=".View.LoginEmailActivity"></activity>
+        <activity android:name=".View.LoginEmailActivity" />
+        <activity android:name=".View.ResetPasswordActivity" />
+        <activity android:name=".View.AddProgressActivity"></activity>
     </application>
 
 </manifest>
