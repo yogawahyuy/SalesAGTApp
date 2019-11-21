@@ -73,7 +73,7 @@
                     android:orientation="vertical">-->
 
                     <Button
-                        android:id="@+id/register"
+                        android:id="@+id/btn_register"
                         android:layout_width="260dp"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
@@ -87,7 +87,7 @@
                         android:id="@+id/btnLogin"
                         android:layout_width="260dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/register"
+                        android:layout_below="@+id/btn_register"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/button_login_email"
                         android:text="LOGIN"

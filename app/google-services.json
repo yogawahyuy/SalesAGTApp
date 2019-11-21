@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "61604516088",
+    "firebase_url": "https://salesagt-feb5e.firebaseio.com",
+    "project_id": "salesagt-feb5e",
+    "storage_bucket": "salesagt-feb5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61604516088:android:39a4a93c04e6e1bdcbab0d",
+        "android_client_info": {
+          "package_name": "com.example.salesagt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61604516088-jv8betpiusht5u920b24a83n7oj9php5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.salesagt",
+            "certificate_hash": "44bde514a4b3db5fd54df5ac71a0f811585f6b12"
+          }
+        },
+        {
+          "client_id": "61604516088-7e49jqo040m6ctimd91i13asgp7ts7lf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.salesagt",
+            "certificate_hash": "695dc78b133f8413d25d02ff5be4ebe1a6be5fc8"
+          }
+        },
+        {
+          "client_id": "61604516088-i3b76vko1ej983ol4q0afob6bbje0p07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6Ya7dM8FozAmb-PWoXjzxJQAy3dlNfGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61604516088-buue572d2lbqopvdd929sntetjbhduc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
