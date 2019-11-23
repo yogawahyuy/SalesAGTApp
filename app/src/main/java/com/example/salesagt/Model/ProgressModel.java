@@ -3,12 +3,12 @@ package com.example.salesagt.Model;
 public class ProgressModel {
     String id,companyName,salesName,checkStatus,income,date;
 
-    public ProgressModel(String id, String companyName, String salesName, String checkStatus, String income) {
-        this.id = id;
+    public ProgressModel(String companyName, String salesName, String checkStatus, String income,String date) {
         this.companyName = companyName;
         this.salesName = salesName;
         this.checkStatus = checkStatus;
         this.income = income;
+        this.date=date;
     }
     public ProgressModel(){}
 

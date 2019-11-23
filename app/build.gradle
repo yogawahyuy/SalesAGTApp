@@ -37,6 +37,8 @@ dependencies {
     implementation 'jp.wasabeef:blurry:2.1.1'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'jp.wasabeef:picasso-transformations:2.1.0'
 
     //Firebase
     implementation 'com.google.android.gms:play-services-auth:16.0.1'

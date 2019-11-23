@@ -1,19 +1,39 @@
 package com.example.salesagt.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.salesagt.LoginActivity;
+import com.example.salesagt.Model.UserModel;
 import com.example.salesagt.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
 
+    TextView namaSales,emailSales,noHp,editProfile;
+    ImageView profilePicture;
+    Button btnLogout;
+    View v;
+    FirebaseAuth mAuth;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -24,7 +44,60 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        v= inflater.inflate(R.layout.fragment_profile, container, false);
+        mAuth=FirebaseAuth.getInstance();
+        namaSales=v.findViewById(R.id.boxid_name);
+        emailSales=v.findViewById(R.id.boxid_email);
+        noHp=v.findViewById(R.id.boxid_nohp);
+        profilePicture=v.findViewById(R.id.boxid_photo);
+        btnLogout=v.findViewById(R.id.logoutBtn);
+
+        getDataFirebase();
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(),LoginActivity.class));
+                getActivity().finish();
+            }
+        });
+
+        return v;
+    }
+
+    private void getDataFirebase(){
+        final FirebaseUser currentUser=FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser!=null){
+            DatabaseReference dbf= FirebaseDatabase.getInstance().getReference("user").child(currentUser.getUid());
+            dbf.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserModel user=dataSnapshot.getValue(UserModel.class);
+                    if (user.getName().isEmpty()){
+                        namaSales.setText("Nama Sales");
+                    }else{
+                        namaSales.setText(user.getName());
+                    }
+                    if (user.getEmail().isEmpty()){
+                        emailSales.setText("email Sales");
+                    }else{
+                        emailSales.setText(user.getEmail());
+                    }
+                    if (user.getIdPhone().isEmpty()){
+                        noHp.setText("No HP Sales");
+                    }else{
+                        noHp.setText(user.getIdPhone());
+                    }
+                    Picasso.get().load(user.getPicture()).into(profilePicture);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
 }

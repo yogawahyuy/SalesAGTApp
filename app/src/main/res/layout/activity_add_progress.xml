@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.AddProgressActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/toolbar_Rel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="42dp"
+                        android:adjustViewBounds="false"
+                        android:src="@drawable/logo" />
+                </android.support.v7.widget.Toolbar>
+                <RelativeLayout
+                    android:id="@+id/textTool_dash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sales AGT"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <TextView
+            android:layout_below="@id/toolbar_Rel"
+            android:id="@+id/title_progres"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Progress"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:id="@+id/linear_box"
+            android:layout_below="@id/title_progres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Perusahaan"
+                android:textColor="@android:color/black"/>
+            <EditText
+                android:id="@+id/edittxt_namaperusahan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Negosiasi"
+                android:textColor="@android:color/black"/>
+           <EditText
+               android:id="@+id/edttext_tanggalnego"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:inputType="date"
+               android:clickable="true"
+               android:editable="false"
+               android:focusable="false"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Status Negosiasi"
+                android:textColor="@android:color/black"/>
+            <Spinner
+                android:id="@+id/spinner_addprogress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/negosiasi_status"
+                android:layout_marginTop="10dp"
+                android:spinnerMode="dropdown"
+                android:prompt="@color/colorPrimary"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estimasi Pendapatan"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp"/>
+            <EditText
+                android:id="@+id/edttext_pendapatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+            <Button
+                android:id="@+id/btn_saveprogres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="Tambah progres"/>
+        </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>

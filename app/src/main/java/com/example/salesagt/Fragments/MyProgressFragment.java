@@ -1,7 +1,9 @@
 package com.example.salesagt.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import com.example.salesagt.Adapter.MyProgressAdapter;
 import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
+import com.example.salesagt.View.AddProgressActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class MyProgressFragment extends Fragment {
     private View emptyView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
+    private FloatingActionButton fabMyProgres;
 
 
     public MyProgressFragment() {
@@ -49,6 +53,7 @@ public class MyProgressFragment extends Fragment {
     private void setUpView(View view) {
         recyclerView=view.findViewById(R.id.recyle_myprogress);
         emptyView=view.findViewById(R.id.emptyview_myprogress);
+        fabMyProgres=view.findViewById(R.id.fab_myprogress);
         progressList=new ArrayList<>();
         adapter= new MyProgressAdapter(getContext(),progressList,emptyView);
         recyclerView.setHasFixedSize(true);
@@ -58,6 +63,13 @@ public class MyProgressFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setAdapter(adapter);
+
+        fabMyProgres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),AddProgressActivity.class));
+            }
+        });
     }
 
     private void generateView(View view) {

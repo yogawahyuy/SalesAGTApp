@@ -6,4 +6,10 @@
     <string name="Progressales">Progress Sales</string>
     <string name="done_sales">Done Sales</string>
     <string name="editStr">EDIT</string>
+    <string-array name="negosiasi_status">
+        <item>Negosiation phase 1</item>
+        <item>Negosiation phase 2</item>
+        <item>Negosiation phase 3</item>
+        <item>Done</item>
+    </string-array>
 </resources>
