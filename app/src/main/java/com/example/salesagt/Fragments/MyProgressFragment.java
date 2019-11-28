@@ -1,8 +1,10 @@
 package com.example.salesagt.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +20,13 @@ import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
 import com.example.salesagt.View.AddProgressActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +42,9 @@ public class MyProgressFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
     private FloatingActionButton fabMyProgres;
+    ProgressDialog progressDialog;
+    DatabaseReference dbf;
+    FirebaseUser firebaseUser;
 
 
     public MyProgressFragment() {
@@ -55,14 +67,14 @@ public class MyProgressFragment extends Fragment {
         emptyView=view.findViewById(R.id.emptyview_myprogress);
         fabMyProgres=view.findViewById(R.id.fab_myprogress);
         progressList=new ArrayList<>();
-        adapter= new MyProgressAdapter(getContext(),progressList,emptyView);
+
         recyclerView.setHasFixedSize(true);
         linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(adapter);
+
 
         fabMyProgres.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,24 +85,48 @@ public class MyProgressFragment extends Fragment {
     }
 
     private void generateView(View view) {
-        MyProgressModel myProgressModel=new MyProgressModel();
-        for (int i = 0; i <5 ; i++) {
-            String id=String.valueOf(i);
-            myProgressModel.setId(id);
-            myProgressModel.setCompanyName("Autentic guards");
-            myProgressModel.setSalesName("yoga");
-            myProgressModel.setCheckStatus("Deal");
-            myProgressModel.setIncome("Rp.200.000.000");
-            myProgressModel.setDate("7 Desember 2017");
-            progressList.add(myProgressModel);
-        }
-        Log.d("my fragment gen", "generateView: "+myProgressModel.getCompanyName());
+        displayLoader();
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        dbf=FirebaseDatabase.getInstance().getReference("progress");
+        dbf.child("allprogress").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnap:dataSnapshot.getChildren()){
+                    MyProgressModel myProgressModel=dataSnap.getValue(MyProgressModel.class);
+                    myProgressModel.setId(dataSnap.getKey());
+                    if (myProgressModel.getUidSales().equalsIgnoreCase(firebaseUser.getUid())){
+                        progressList.add(myProgressModel);
+                    }
+
+                }
+                adapter= new MyProgressAdapter(getContext(),progressList,emptyView);
+                recyclerView.setAdapter(adapter);
+                progressDialog.dismiss();
+                updateEmptyView();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+    private void updateEmptyView(){
         if (progressList.size()==0){
             emptyView.setVisibility(View.VISIBLE);
         }else{
             emptyView.setVisibility(View.GONE);
         }
-
+    }
+    private void displayLoader(){
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
 }

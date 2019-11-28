@@ -1,7 +1,9 @@
 package com.example.salesagt.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,13 @@ import com.example.salesagt.Adapter.ProgressAdapter;
 import com.example.salesagt.Model.DoneModel;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +39,9 @@ public class DoneProgressFragment extends Fragment {
     private View emptyView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-
+    ProgressDialog progressDialog;
+    DatabaseReference dbf;
+    FirebaseUser firebaseUser;
     public DoneProgressFragment() {
         // Required empty public constructor
     }
@@ -50,31 +61,54 @@ public class DoneProgressFragment extends Fragment {
         recyclerView=view.findViewById(R.id.recyle_done);
         emptyView=view.findViewById(R.id.emptyview_done);
         doneList=new ArrayList<>();
-        adapter= new DoneAdapter(getContext(),doneList,emptyView);
+
         linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(adapter);
+
+
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        dbf=FirebaseDatabase.getInstance().getReference("doneprogress");
     }
     private void generateView(View view) {
-        DoneModel doneModel= new DoneModel();
-        for (int i = 0; i <10 ; i++) {
-            String id=String.valueOf(i);
-            doneModel.setId(id);
-            doneModel.setCompanyName("Authentic Guards");
-            doneModel.setSalesName("Yoga");
-            doneModel.setCheckStatus("Done");
-            doneModel.setIncome("Rp.100.0000.000");
-            doneList.add(doneModel);
-        }
-        Log.d("done fragment gen", "generateView: "+doneModel.getCompanyName());
+        displayLoader();
+        dbf.child("alldoneprogres").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnap:dataSnapshot.getChildren()){
+                    DoneModel doneModel=dataSnap.getValue(DoneModel.class);
+                    doneModel.setId(dataSnap.getKey());
+                    doneList.add(doneModel);
+                }
+                progressDialog.dismiss();
+                adapter= new DoneAdapter(getContext(),doneList,emptyView);
+                recyclerView.setAdapter(adapter);
+                updateEmptyView();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void updateEmptyView(){
         if (doneList.size()==0){
-            emptyView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.VISIBLE);
         }else{
-            emptyView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
         }
+    }
+    private void displayLoader(){
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
 }

@@ -1,9 +1,26 @@
 package com.example.salesagt.Model;
 
 public class MyProgressModel {
-    String id,companyName,salesName,checkStatus,income,date;
+    String id,companyName,salesName,checkStatus,income,date,uidSales;
 
     public MyProgressModel() {
+    }
+
+    public MyProgressModel(String companyName, String salesName, String checkStatus, String income, String date, String uidSales) {
+        this.companyName = companyName;
+        this.salesName = salesName;
+        this.checkStatus = checkStatus;
+        this.income = income;
+        this.date = date;
+        this.uidSales = uidSales;
+    }
+
+    public String getUidSales() {
+        return uidSales;
+    }
+
+    public void setUidSales(String uidSales) {
+        this.uidSales = uidSales;
     }
 
     public String getId() {

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.salesagt.DashboardActivity;
+import com.example.salesagt.Model.DoneModel;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -72,17 +73,30 @@ public class AddProgressActivity extends AppCompatActivity {
         if (namaPerusahaan.length()==0||tanggalNego.length()==0||pendapatan.length()==0){
             Toast.makeText(this, "Please fill all field", Toast.LENGTH_SHORT).show();
         }else{
-            dbRefrence=FirebaseDatabase.getInstance().getReference("progress");
             firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-            dbRefrence.child(firebaseUser.getUid()).push().setValue(new ProgressModel(namaPerusahaan,firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString()))
-                    .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
-                            Toast.makeText(AddProgressActivity.this, "Progress Added", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    });
+            if (spinnerNego.getSelectedItemPosition()!=3) {
+                dbRefrence = FirebaseDatabase.getInstance().getReference("progress");
+                dbRefrence.child("allprogress").push().setValue(new ProgressModel(namaPerusahaan, firebaseUser.getDisplayName(), spinnerNego.getSelectedItem().toString(), editPendapatan.getText().toString(), editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
+                                Toast.makeText(AddProgressActivity.this, "Progress Added", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+            }else{
+                dbRefrence=FirebaseDatabase.getInstance().getReference("doneprogress");
+                dbRefrence.child("alldoneprogres").push().setValue(new DoneModel(namaPerusahaan,firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
+                                Toast.makeText(AddProgressActivity.this, "Done Progress Added", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
+            }
         }
     }
 

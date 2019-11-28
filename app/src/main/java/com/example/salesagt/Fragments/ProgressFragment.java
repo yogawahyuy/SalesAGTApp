@@ -1,7 +1,9 @@
 package com.example.salesagt.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,13 @@ import android.view.ViewGroup;
 import com.example.salesagt.Adapter.ProgressAdapter;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +37,9 @@ public class ProgressFragment extends Fragment {
     private View emptyView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-
+    ProgressDialog progressDialog;
+    DatabaseReference dbf;
+    FirebaseUser firebaseUser;
 
     public ProgressFragment() {
         // Required empty public constructor
@@ -54,7 +65,7 @@ public class ProgressFragment extends Fragment {
         recyclerView=view.findViewById(R.id.recyle_progress);
         emptyView=view.findViewById(R.id.emptyview_progress);
         progressList=new ArrayList<>();
-        adapter= new ProgressAdapter(getContext(),progressList,emptyView);
+
         recyclerView.setHasFixedSize(true);
 
         linearLayoutManager=new LinearLayoutManager(getContext());
@@ -62,22 +73,48 @@ public class ProgressFragment extends Fragment {
         dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        recyclerView.setAdapter(adapter);
+
+
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        dbf=FirebaseDatabase.getInstance().getReference().child("progress");
     }
     private void generateView(){
-        ProgressModel progressModel=new ProgressModel();
-        for (int i = 0; i <5 ; i++) {
-            String id=String.valueOf(i);
-            progressModel.setId(id);
-            progressModel.setCompanyName("Authentic Guards");
-            progressModel.setSalesName("Yoga");
-            progressModel.setCheckStatus("Negotiation phase 2");
-            progressModel.setIncome("Rp.100.0000.000");
-            progressList.add(progressModel);
-        }
+        displayLoader();
+        dbf.child("allprogress").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot datasnap:dataSnapshot.getChildren()){
+                    ProgressModel progressModel=datasnap.getValue(ProgressModel.class);
+                    progressModel.setId(datasnap.getKey());
+                    progressList.add(progressModel);
+                    Log.d("progres", "onDataChange: "+datasnap.getKey().toString());
+                    Log.d("progres", "onDataChange: "+progressList.size() +"");
+                }
+                progressDialog.dismiss();
+                adapter= new ProgressAdapter(getContext(),progressList,emptyView);
+                recyclerView.setAdapter(adapter);
+                updateEmptyView();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
-        Log.d("Progress fragment gen", "generateView: "+progressModel.getCompanyName());
+
+
+    }
+    private void displayLoader(){
+        progressDialog=new ProgressDialog(getContext());
+        progressDialog.setMessage("Getting Data...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+    private void updateEmptyView(){
         if (progressList.size()==0){
             emptyView.setVisibility(View.VISIBLE);
         }else{

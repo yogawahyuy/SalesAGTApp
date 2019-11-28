@@ -1,7 +1,7 @@
 package com.example.salesagt.Model;
 
 public class ProgressModel {
-    String id,companyName,salesName,checkStatus,income,date;
+    String id,companyName,salesName,checkStatus,income,date,uidSales;
 
     public ProgressModel(String companyName, String salesName, String checkStatus, String income,String date) {
         this.companyName = companyName;
@@ -9,7 +9,24 @@ public class ProgressModel {
         this.checkStatus = checkStatus;
         this.income = income;
         this.date=date;
+    }public ProgressModel(String companyName, String salesName, String checkStatus, String income,String date,String uid) {
+        this.companyName = companyName;
+        this.salesName = salesName;
+        this.checkStatus = checkStatus;
+        this.income = income;
+        this.date=date;
+        this.uidSales=uid;
     }
+
+
+    public String getUidSales() {
+        return uidSales;
+    }
+
+    public void setUidSales(String uidSales) {
+        this.uidSales = uidSales;
+    }
+
     public ProgressModel(){}
 
     public String getId() {
