@@ -1,9 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.DetailProgresActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/toolbar_Rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="42dp"
+                android:adjustViewBounds="false"
+                android:src="@drawable/logo" />
+        </android.support.v7.widget.Toolbar>
+        <RelativeLayout
+            android:id="@+id/textTool_dash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sales AGT"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+        <ImageView
+        android:id="@+id/detail_imgView"
+            android:layout_below="@id/toolbar_Rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icons8process100"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/linear_detil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/detail_imgView"
+        android:layout_margin="16dp">
+        <RelativeLayout
+            android:id="@+id/fieldcompanyname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/detail_companyname"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Company Name "
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_toRightOf="@id/detail_companyname"
+                android:id="@+id/detail_txtcompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bla bla"
+                android:layout_marginLeft="20dp"
+                />
+            <View
+                android:layout_below="@id/detail_companyname"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/darker_gray"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/fieldnegophase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/detail_negophase"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Status Negotiation "
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_toRightOf="@id/detail_negophase"
+                android:id="@+id/detail_txtnego"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bla bla"
+                android:layout_marginLeft="20dp"
+                />
+            <View
+                android:layout_below="@id/detail_negophase"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/darker_gray"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/fieldtanggalnego"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/detail_tanggalnego"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Date "
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_toRightOf="@id/detail_tanggalnego"
+                android:id="@+id/detail_txttgl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bla bla"
+                android:layout_marginLeft="20dp"
+                />
+            <View
+                android:layout_below="@id/detail_tanggalnego"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/darker_gray"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/fieldincome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/detail_income"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Income "
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_toRightOf="@id/detail_income"
+                android:id="@+id/detail_txtincom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bla bla"
+                android:layout_marginLeft="20dp"
+                />
+            <View
+                android:layout_below="@id/detail_income"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/darker_gray"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/fieldsales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/detail_salesname"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:text="Sales Name "
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_toRightOf="@id/detail_salesname"
+                android:id="@+id/detail_txtsales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bla bla"
+                android:layout_marginLeft="20dp"
+                />
+            <View
+                android:layout_below="@id/detail_salesname"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@android:color/darker_gray"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_action"
+        android:layout_below="@id/linear_detil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Edit or Delete"
+        android:background="@color/colorPrimary"/>
+
+
+</RelativeLayout>

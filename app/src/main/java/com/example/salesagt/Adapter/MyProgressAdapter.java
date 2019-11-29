@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,16 +16,25 @@ import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.R;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 public class MyProgressAdapter extends RecyclerView.Adapter<MyProgressAdapter.ViewHolder> {
     private Context mContext;
-    private List<MyProgressModel> mProgres;
+    private ArrayList<MyProgressModel> mProgres;
     private View mEmptyView;
+    private ClickHandler clickHandler;
+    private ArrayList<Integer> mSelectedId;
 
-    public MyProgressAdapter(Context mContext, List<MyProgressModel> mProgres, View mEmptyView) {
+    public interface ClickHandler{
+        void onItemClick(int pos);
+    }
+
+    public MyProgressAdapter(Context mContext, ArrayList<MyProgressModel> mProgres, View mEmptyView,ClickHandler clickHandler) {
         this.mContext = mContext;
         this.mProgres = mProgres;
         this.mEmptyView = mEmptyView;
+        this.clickHandler=clickHandler;
     }
 
     @NonNull
@@ -36,7 +46,7 @@ public class MyProgressAdapter extends RecyclerView.Adapter<MyProgressAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyProgressAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyProgressAdapter.ViewHolder holder, final int position) {
         if (mProgres.size()==0){
             mEmptyView.setVisibility(View.VISIBLE);
         }else{
@@ -47,14 +57,6 @@ public class MyProgressAdapter extends RecyclerView.Adapter<MyProgressAdapter.Vi
         holder.checkStatus.setText(mProgres.get(position).getCheckStatus());
         holder.income.setText(mProgres.get(position).getIncome());
         holder.date.setText(mProgres.get(position).getDate());
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext,DetailProgresActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
-
 
     }
 
@@ -62,7 +64,7 @@ public class MyProgressAdapter extends RecyclerView.Adapter<MyProgressAdapter.Vi
     public int getItemCount() {
         return (mProgres!=null)?mProgres.size():0;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private LinearLayout linearLayout;
         private TextView namaPerusahaan,namaSales,checkStatus,income,date;
 
@@ -74,6 +76,12 @@ public class MyProgressAdapter extends RecyclerView.Adapter<MyProgressAdapter.Vi
             checkStatus=itemView.findViewById(R.id.status_recyle_myprogress);
             income=itemView.findViewById(R.id.income_recyle_myprogress);
             date=itemView.findViewById(R.id.tanggal_myprogress);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            clickHandler.onItemClick(getAdapterPosition());
         }
     }
 }

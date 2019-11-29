@@ -1,6 +1,8 @@
 package com.example.salesagt.Model;
 
-public class ProgressModel {
+import java.io.Serializable;
+
+public class ProgressModel implements Serializable {
     String id,companyName,salesName,checkStatus,income,date,uidSales;
 
     public ProgressModel(String companyName, String salesName, String checkStatus, String income,String date) {

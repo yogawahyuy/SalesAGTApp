@@ -1,6 +1,8 @@
 package com.example.salesagt.Model;
 
-public class DoneModel {
+import java.io.Serializable;
+
+public class DoneModel implements Serializable {
     String id,companyName,salesName,checkStatus,income,date,uidSales;
 
     public DoneModel(String companyName, String salesName, String checkStatus, String income,String date) {

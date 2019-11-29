@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.salesagt.Activity.DetailProgresActivity;
 import com.example.salesagt.Adapter.MyProgressAdapter;
 import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.Model.ProgressModel;
@@ -36,7 +37,7 @@ import java.util.List;
  */
 public class MyProgressFragment extends Fragment {
     private RecyclerView recyclerView;
-    private List<MyProgressModel> progressList;
+    private ArrayList<MyProgressModel> progressList;
     private RecyclerView.Adapter adapter;
     private View emptyView;
     private LinearLayoutManager linearLayoutManager;
@@ -45,6 +46,7 @@ public class MyProgressFragment extends Fragment {
     ProgressDialog progressDialog;
     DatabaseReference dbf;
     FirebaseUser firebaseUser;
+    String id;
 
 
     public MyProgressFragment() {
@@ -84,22 +86,31 @@ public class MyProgressFragment extends Fragment {
         });
     }
 
-    private void generateView(View view) {
+    private void generateView(final View view) {
         displayLoader();
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         dbf=FirebaseDatabase.getInstance().getReference("progress");
         dbf.child("allprogress").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                MyProgressModel myProgressModel;
                 for (DataSnapshot dataSnap:dataSnapshot.getChildren()){
-                    MyProgressModel myProgressModel=dataSnap.getValue(MyProgressModel.class);
+                  myProgressModel=dataSnap.getValue(MyProgressModel.class);
                     myProgressModel.setId(dataSnap.getKey());
+                    Log.d("progres", "onDataChangemy: "+dataSnapshot.getKey().toString());
                     if (myProgressModel.getUidSales().equalsIgnoreCase(firebaseUser.getUid())){
                         progressList.add(myProgressModel);
                     }
-
+                    Log.d("progress", "onDataChangesmy: "+myProgressModel.getId());
                 }
-                adapter= new MyProgressAdapter(getContext(),progressList,emptyView);
+                adapter= new MyProgressAdapter(getContext(), progressList, emptyView, new MyProgressAdapter.ClickHandler() {
+                    @Override
+                    public void onItemClick(int pos) {
+                        Intent intent=new Intent(view.getContext(),DetailProgresActivity.class);
+                        intent.putExtra("id",progressList.get(pos));
+                        view.getContext().startActivity(intent);
+                    }
+                });
                 recyclerView.setAdapter(adapter);
                 progressDialog.dismiss();
                 updateEmptyView();

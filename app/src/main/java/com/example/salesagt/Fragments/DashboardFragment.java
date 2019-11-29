@@ -29,7 +29,7 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ViewPager viewPager=view.findViewById(R.id.viewPager_dash);
-        viewPager.setAdapter(new ViewAdapterDashboard(getContext(),getFragmentManager()));
+        viewPager.setAdapter(new ViewAdapterDashboard(getContext(),getChildFragmentManager()));
         TabLayout tabLayout=view.findViewById(R.id.tablayout_dash);
         tabLayout.setupWithViewPager(viewPager);
         return view;
