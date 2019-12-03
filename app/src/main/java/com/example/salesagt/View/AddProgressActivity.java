@@ -10,10 +10,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.salesagt.Activity.DetailProgresActivity;
 import com.example.salesagt.DashboardActivity;
 import com.example.salesagt.Model.DoneModel;
+import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.Model.ProgressModel;
 import com.example.salesagt.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,12 +33,16 @@ import java.util.Locale;
 
 public class AddProgressActivity extends AppCompatActivity {
     EditText editNamaPerusahaan,editTanggalNego,editPendapatan;
+    TextView titleProgres;
     Button btnTambah;
     Spinner spinnerNego;
     List<String > categori=new ArrayList<>();
     DatabaseReference dbRefrence;
     FirebaseUser firebaseUser;
     String itemSpiner;
+    ProgressModel progressModel;
+    MyProgressModel myProgressModel;
+    DoneModel doneModel;
     final Calendar calendarNego=Calendar.getInstance();
 
     @Override
@@ -47,6 +54,7 @@ public class AddProgressActivity extends AppCompatActivity {
         editPendapatan=findViewById(R.id.edttext_pendapatan);
         spinnerNego=findViewById(R.id.spinner_addprogress);
         btnTambah=findViewById(R.id.btn_saveprogres);
+        titleProgres=findViewById(R.id.title_progres);
 
         categori.add("Negosiasi phase 1");
         categori.add("Negosiasi phase 2");
@@ -56,14 +64,69 @@ public class AddProgressActivity extends AppCompatActivity {
         categoriAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerNego.setAdapter(categoriAdapter);
         setDatePicker();
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addData();
+                if (getIntent().getSerializableExtra("data")==null) addData();
+                else updateData();
             }
         });
 
+        if (getIntent().getSerializableExtra("data")!=null){
+            getDataFromIntent();
+            btnTambah.setText("Edit Progress");
+        }else{
 
+        }
+
+
+    }
+    private void getDataFromIntent(){
+        titleProgres.setText("Edit Progress");
+        if (getIntent().getIntExtra("prog",0)==1){
+            progressModel=(ProgressModel)getIntent().getSerializableExtra("data");
+            editNamaPerusahaan.setText(progressModel.getCompanyName());
+            editTanggalNego.setText(progressModel.getDate());
+            editPendapatan.setText(progressModel.getIncome());
+            if (progressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 1")){
+                spinnerNego.setSelection(0);
+            }else if (progressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 2")){
+                spinnerNego.setSelection(1);
+            }else if (progressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 3")){
+                spinnerNego.setSelection(2);
+            }else{
+                spinnerNego.setSelection(3);
+            }
+        }else if (getIntent().getIntExtra("myprog",0)==2){
+            myProgressModel=(MyProgressModel)getIntent().getSerializableExtra("data");
+            editNamaPerusahaan.setText(myProgressModel.getCompanyName());
+            editTanggalNego.setText(myProgressModel.getDate());
+            editPendapatan.setText(myProgressModel.getIncome());
+            if (myProgressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 1")){
+                spinnerNego.setSelection(0);
+            }else if (myProgressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 2")){
+                spinnerNego.setSelection(1);
+            }else if (myProgressModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 3")){
+                spinnerNego.setSelection(2);
+            }else{
+                spinnerNego.setSelection(3);
+            }
+        }else if(getIntent().getIntExtra("doneprog",0)==3){
+            doneModel=(DoneModel)getIntent().getSerializableExtra("data");
+            editNamaPerusahaan.setText(doneModel.getCompanyName());
+            editTanggalNego.setText(doneModel.getDate());
+            editPendapatan.setText(doneModel.getIncome());
+            if (doneModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 1")){
+                spinnerNego.setSelection(0);
+            }else if (doneModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 2")){
+                spinnerNego.setSelection(1);
+            }else if (doneModel.getCheckStatus().equalsIgnoreCase("Negosiasi phase 3")){
+                spinnerNego.setSelection(2);
+            }else{
+                spinnerNego.setSelection(3);
+            }
+        }
 
     }
     private void addData(){
@@ -73,7 +136,7 @@ public class AddProgressActivity extends AppCompatActivity {
         if (namaPerusahaan.length()==0||tanggalNego.length()==0||pendapatan.length()==0){
             Toast.makeText(this, "Please fill all field", Toast.LENGTH_SHORT).show();
         }else{
-            firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+
             if (spinnerNego.getSelectedItemPosition()!=3) {
                 dbRefrence = FirebaseDatabase.getInstance().getReference("progress");
                 dbRefrence.child("allprogress").push().setValue(new ProgressModel(namaPerusahaan, firebaseUser.getDisplayName(), spinnerNego.getSelectedItem().toString(), editPendapatan.getText().toString(), editTanggalNego.getText().toString(),firebaseUser.getUid()))
@@ -96,6 +159,91 @@ public class AddProgressActivity extends AppCompatActivity {
                                 finish();
                             }
                         });
+            }
+        }
+    }
+
+    private void updateData(){
+        if (editNamaPerusahaan.length()==0||editPendapatan.length()==0||editTanggalNego.length()==0){
+            Toast.makeText(this, "You must fill all field", Toast.LENGTH_SHORT).show();
+        }else{
+            if (spinnerNego.getSelectedItemPosition()!=3){
+                dbRefrence=FirebaseDatabase.getInstance().getReference("progress");
+                if (getIntent().getIntExtra("myprog",0)==2){
+                    dbRefrence.child("allprogress").child(myProgressModel.getId()).setValue(new ProgressModel(editNamaPerusahaan.getText().toString(),firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
+                                    Toast.makeText(AddProgressActivity.this, "Edit Progress success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                }if (getIntent().getIntExtra("prog",0)==1){
+                    dbRefrence.child("allprogress").child(progressModel.getId()).setValue(new ProgressModel(editNamaPerusahaan.getText().toString(),firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
+                                    Toast.makeText(AddProgressActivity.this, "Edit Progress success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                }
+
+
+            }else{
+                dbRefrence=FirebaseDatabase.getInstance().getReference("doneprogress");
+                if (getIntent().getIntExtra("doneprog",0)==3){
+                    dbRefrence.child("alldoneprogres").child(doneModel.getId()).setValue(new DoneModel(editNamaPerusahaan.getText().toString(),firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
+                                    Toast.makeText(AddProgressActivity.this, "Edit Progress success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                }
+                if (getIntent().getIntExtra("myprog",0)==2){
+                    dbRefrence.child("alldoneprogres").push().setValue(new DoneModel(editNamaPerusahaan.getText().toString(),firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
+                                    Toast.makeText(AddProgressActivity.this, "Edit Progress success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                    dbRefrence=FirebaseDatabase.getInstance().getReference("progress");
+                    dbRefrence.child("allprogress").child(myProgressModel.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                         //   Toast.makeText(AddProgressActivity.this, "Progress Delete Success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
+                            finish();
+                        }
+                    });
+                }if (getIntent().getIntExtra("prog",0)==1){
+                    dbRefrence.child("alldoneprogres").push().setValue(new DoneModel(editNamaPerusahaan.getText().toString(),firebaseUser.getDisplayName(),spinnerNego.getSelectedItem().toString(),editPendapatan.getText().toString(),editTanggalNego.getText().toString(),firebaseUser.getUid()))
+                            .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    startActivity(new Intent(AddProgressActivity.this,DashboardActivity.class));
+                                    Toast.makeText(AddProgressActivity.this, "Edit Progress success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                    dbRefrence=FirebaseDatabase.getInstance().getReference("progress");
+                    dbRefrence.child("allprogress").child(progressModel.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Toast.makeText(AddProgressActivity.this, "Progress Delete Success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
+                            finish();
+                        }
+                    });
+                }
             }
         }
     }

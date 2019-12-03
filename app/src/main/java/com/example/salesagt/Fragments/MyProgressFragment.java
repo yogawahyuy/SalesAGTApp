@@ -108,6 +108,7 @@ public class MyProgressFragment extends Fragment {
                     public void onItemClick(int pos) {
                         Intent intent=new Intent(view.getContext(),DetailProgresActivity.class);
                         intent.putExtra("id",progressList.get(pos));
+                        intent.putExtra("myprog",2);
                         view.getContext().startActivity(intent);
                     }
                 });

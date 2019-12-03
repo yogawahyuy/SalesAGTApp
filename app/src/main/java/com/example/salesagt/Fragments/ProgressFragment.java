@@ -90,7 +90,6 @@ public class ProgressFragment extends Fragment {
                     Log.d("progres", "onDataChange: "+datasnap.getKey().toString());
 
                 }
-                Log.d("progres", "onDataChangess: "+progressList.get(2).getId() +"");
                 progressDialog.dismiss();
                 adapter= new ProgressAdapter(getContext(),progressList,emptyView);
                 recyclerView.setAdapter(adapter);

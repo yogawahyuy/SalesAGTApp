@@ -39,7 +39,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProgressAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProgressAdapter.ViewHolder holder, final int position) {
         if (mProgres.size()==0){
             mEmptyView.setVisibility(View.VISIBLE);
         }else{
@@ -54,6 +54,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext,DetailProgresActivity.class);
+                intent.putExtra("id",mProgres.get(position));
+                intent.putExtra("prog",1);
                 mContext.startActivity(intent);
             }
         });

@@ -22,6 +22,14 @@ public class DoneModel implements Serializable {
     }
     public DoneModel(){}
 
+    public String getUidSales() {
+        return uidSales;
+    }
+
+    public void setUidSales(String uidSales) {
+        this.uidSales = uidSales;
+    }
+
     public String getId() {
         return id;
     }
