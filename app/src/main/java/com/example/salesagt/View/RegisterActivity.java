@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,7 +86,16 @@ public class RegisterActivity extends AppCompatActivity {
                     }else{
                         final FirebaseUser currentUser=mFirebaseAuth.getCurrentUser();
                         final HashMap<String ,Object> user=new HashMap<>();
-                        String name=currentUser.getDisplayName();
+                        UserProfileChangeRequest profileUpdate=new UserProfileChangeRequest.Builder()
+                                .setDisplayName(fullName.getText().toString()).build();
+                        currentUser.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful())
+                                    Log.d("setdisplayname", "onComplete: compeltee"+currentUser.getDisplayName());
+                            }
+                        });
+                        final String name=currentUser.getDisplayName();
                         final DatabaseReference dbf=FirebaseDatabase.getInstance().getReference("user").child(currentUser.getUid());
                         dbf.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -93,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.put("email",email.getText().toString().trim());
                                 user.put("idEmail",currentUser.getUid());
                                 user.put("idPhone",noHp.getText().toString().trim());
-                                user.put("name",fullName.getText().toString());
+                                user.put("name",currentUser.getDisplayName());
                                 user.put("picture",gambar);
 
                                 assert currentUser!=null;

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.example.salesagt.DashboardActivity;
 import com.example.salesagt.Model.DoneModel;
 import com.example.salesagt.Model.MyProgressModel;
 import com.example.salesagt.Model.ProgressModel;
+import com.example.salesagt.Model.UserModel;
 import com.example.salesagt.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -136,15 +138,16 @@ public class AddProgressActivity extends AppCompatActivity {
         if (namaPerusahaan.length()==0||tanggalNego.length()==0||pendapatan.length()==0){
             Toast.makeText(this, "Please fill all field", Toast.LENGTH_SHORT).show();
         }else{
-
             if (spinnerNego.getSelectedItemPosition()!=3) {
                 dbRefrence = FirebaseDatabase.getInstance().getReference("progress");
+
                 dbRefrence.child("allprogress").push().setValue(new ProgressModel(namaPerusahaan, firebaseUser.getDisplayName(), spinnerNego.getSelectedItem().toString(), editPendapatan.getText().toString(), editTanggalNego.getText().toString(),firebaseUser.getUid()))
                         .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
                                 Toast.makeText(AddProgressActivity.this, "Progress Added", Toast.LENGTH_SHORT).show();
+                                Log.d("addprogres", "onSuccess: success ");
                                 finish();
                             }
                         });
@@ -156,11 +159,13 @@ public class AddProgressActivity extends AppCompatActivity {
                             public void onSuccess(Void aVoid) {
                                 startActivity(new Intent(AddProgressActivity.this, DashboardActivity.class));
                                 Toast.makeText(AddProgressActivity.this, "Done Progress Added", Toast.LENGTH_SHORT).show();
+                                Log.d("adddone", "onSuccess: success ");
                                 finish();
                             }
                         });
             }
         }
+
     }
 
     private void updateData(){

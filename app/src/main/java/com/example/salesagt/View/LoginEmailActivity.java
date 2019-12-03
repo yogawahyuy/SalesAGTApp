@@ -114,6 +114,7 @@ public class LoginEmailActivity extends AppCompatActivity {
                                 }
                             });
                         }else{
+                            progressDialog.dismiss();
                             Toast.makeText(LoginEmailActivity.this, "Please Verify your Email", Toast.LENGTH_SHORT).show();
                         }
                     }

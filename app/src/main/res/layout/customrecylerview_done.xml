@@ -73,7 +73,7 @@
             android:padding="8dp"
             >
             <TextView
-                android:id="@+id/tanggal_progress"
+                android:id="@+id/tanggal_done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="27 November 2019"

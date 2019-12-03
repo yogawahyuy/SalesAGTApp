@@ -47,6 +47,7 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.ViewHolder> {
         holder.sales.setText(mDone.get(position).getSalesName());
         holder.statuss.setText(mDone.get(position).getCheckStatus());
         holder.income.setText(mDone.get(position).getIncome());
+        holder.date.setText(mDone.get(position).getDate());
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +65,7 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout linearLayout;
-        private TextView namaPerusahan,sales,statuss,income;
+        private TextView namaPerusahan,sales,statuss,income,date;
         public ViewHolder(View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.recyle_linier_done);
@@ -72,6 +73,8 @@ public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.ViewHolder> {
             sales = itemView.findViewById(R.id.namasales_recyle_done);
             statuss = itemView.findViewById(R.id.status_recyle_done);
             income = itemView.findViewById(R.id.income_recyle_done);
+            date=itemView.findViewById(R.id.tanggal_done);
+
         }
     }
 }
