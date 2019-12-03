@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.1.0'
+    implementation 'com.github.clans:fab:1.6.4'
 
     //Firebase
     implementation 'com.google.android.gms:play-services-auth:16.0.1'

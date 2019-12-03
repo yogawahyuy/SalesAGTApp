@@ -167,7 +167,7 @@ public class DetailProgresActivity extends AppCompatActivity {
             if (myProgressModel.getUidSales().equalsIgnoreCase(firebaseUser.getUid())) {
                 dbf = FirebaseDatabase.getInstance().getReference("progress");
                 if (dbf != null) {
-                    dbf.child("allprogress").child(progressModel.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    dbf.child("allprogress").child(myProgressModel.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(DetailProgresActivity.this, "Progress Delete Success", Toast.LENGTH_SHORT).show();

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.MyProgressFragment">
 
     <android.support.v7.widget.RecyclerView
@@ -35,18 +36,68 @@
             android:textAlignment="center"/>
 
     </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/doneProgres_rec"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
-    <android.support.design.widget.FloatingActionButton
+
+    <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_myprogress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_menu_add"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
-        />
+        app:fab_colorNormal="@color/colorPrimary"
+        app:fab_colorPressed="@color/colorWhite"
+        app:fab_colorRipple="#99FFFFFF"
+        app:fab_showShadow="true"
+        app:fab_shadowColor="#66000000"
+        app:fab_shadowRadius="4dp"
+        app:fab_shadowXOffset="1dp"
+        app:fab_shadowYOffset="3dp"
+        app:fab_size="normal"
+        app:fab_showAnimation="@anim/fab_scale_up"
+        app:fab_hideAnimation="@anim/fab_scale_down"
+        app:fab_label=""
+        app:fab_progress_color="#FF009688"
+        app:fab_progress_backgroundColor="#4D000000"
+        app:fab_progress_indeterminate="false"
+        app:fab_progress_max="100"
+        app:fab_progress="0"
+        app:fab_progress_showBackground="true"
+        >
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabadd_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fab_add"
+            app:fab_label="Add Progress"
+            app:fab_size="mini"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/progress_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_timeline_black_18dp"
+            app:fab_label="My Progress Sales"
+            app:fab_size="mini"
+            />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/done_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_done_black_18dp"
+            app:fab_label="My Done Sales"
+            app:fab_size="mini"
+            />
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 
 </RelativeLayout>

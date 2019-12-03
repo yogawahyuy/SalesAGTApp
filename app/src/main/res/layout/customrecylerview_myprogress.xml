@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/icons8tickbox160"
+            android:src="@drawable/icons8process100"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="10dp"/>
         <RelativeLayout
